@@ -13,3 +13,7 @@ Route::get('/hello',  function () {
 Route::get('/nama', function () {
     return "Nama saya : izaa";
 });
+
+Route::get('/test', function ($id) {
+    return "test";
+});
