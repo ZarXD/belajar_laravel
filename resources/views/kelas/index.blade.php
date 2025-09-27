@@ -1,25 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Kelas</title>
-</head>
-<body>
-    <h1>Tambah Kelas</h1>
-    <form action="/kelas" method="post">
-        @csrf
-        <input type="text" name="namaKelas" placeholder="Nama Kelas"><br>
-        <input type="text" name="kapasitas" placeholder="Kapasitas Kelas"><br>
-        <button type="submit">Simpan</button>
-    </form>
-    <h2>List Kelas</h2>
-    <ul>
-        @foreach($data as $kls)
-        <li>
-            {{ $kls->namaKelas }} - {{ $kls->kapasitas }}
-        </li>
-        @endforeach
-    </ul>
-</body>
-</html>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Data Kelas') }}
+        </h2>
+    </x-slot>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        {{-- Form tambah kelas --}}
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-6">
+            <div class="p-6 text-gray-900 dark:text-gray-100">
+                <h3 class="font-semibold text-lg mb-4">Kelas</h3>
+                <form method="POST" action="{{ route('kelas.store') }}" class="space-y-4">
+                    @csrf
+                    <input type="text" name="namaKelas" placeholder="Nama Kelas" class="border-gray-300 rounded-md w-full">
+                    <input type="text" name="kapasitas" placeholder="Kapasitas" class="border-gray-300 rounded-md w-full">
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                        Simpan
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        {{-- List kelas --}}
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="p-6 text-gray-900 dark:text-gray-100">
+                <h3 class="font-semibold text-lg mb-4">List Kelas</h3>
+                <table class="table-auto w-full border">
+                    <thead class="bg-gray-200 text-gray-700">
+                        <tr>
+                            <th class="px-4 py-2 border">Nama Kelas</th>
+                            <th class="px-4 py-2 border">Kapasitas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data as $kls)
+                            <tr>
+                                <th class="border px-4 py-2">{{ $kls->namaKelas }}</th>
+                                <th class="border px-4 py-2">{{ $kls->kapasitas }}</th>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    </div>
+</x-app-layout>
