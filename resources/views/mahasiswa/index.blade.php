@@ -28,15 +28,29 @@
                 <table class="table-auto w-full border">
                     <thead class="bg-gray-200 text-gray-700">
                         <tr>
-                            <th class="px-4 py-2 border">NIM</th>
-                            <th class="px-4 py-2 border">Nama</th>
+                            <th class="px-4 py-2 w-16 text-center">No</th>
+                            <th class="px-4 py-2">NIM</th>
+                            <th class="px-4 py-2">Nama</th>
+                            <th class="px-4 py-2 w-40 text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($data as $mhs)
                             <tr>
-                                <th class="border px-4 py-2">{{ $mhs->nim }}</th>
-                                <th class="border px-4 py-2">{{ $mhs->nama }}</th>
+                                <td class="border px-4 py-2 text-center">{{ $loop->iteration }}</td>
+                                <td class="border px-4 py-2">{{ $mhs->nim }}</td>
+                                <td class="border px-4 py-2">{{ $mhs->nama }}</td>
+                                <td class="border px-4 py-2 text-center">
+                                    <a href="{{ route('mahasiswa.edit', $mhs->id) }}" class="inline-block px-3 py-1 bg-yellow-500 text-white rounded">Edit</a>
+
+                                    <form method="POST" action="{{ route('mahasiswa.destroy', $mhs->id) }}" class="inline-block">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" onclick="return confirm('Hapus data ini?')" class="px-3 py-1 bg-red-600 text-white rounded">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
