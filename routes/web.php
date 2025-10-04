@@ -5,6 +5,7 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MatakuliahController;
+use App\Http\Controllers\RuanganController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,17 +28,26 @@ Route::middleware('auth')->group(function () {
     Route::put('/mahasiswa/{id}', [MahasiswaController::class, 'update'])->name('mahasiswa.update');
     Route::delete('/mahasiswa/{id}', [MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
     
-    // Kelas
-    Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
-    Route::post('/kelas', [KelasController::class, 'store'])->name('kelas.store');
+    // Ruangan
+    Route::get('/ruangan', [RuanganController::class, 'index'])->name('ruangan.index');
+    Route::post('/ruangan', [RuanganController::class, 'store'])->name('ruangan.store');
+    Route::get('/ruangan/{id}/edit', [RuanganController::class, 'edit'])->name('ruangan.edit');
+    Route::put('/ruangan/{id}', [RuanganController::class, 'update'])->name('ruangan.update');
+    Route::delete('/ruangan/{id}', [RuanganController::class, 'destroy'])->name('ruangan.destroy');
     
     // Matakuliah
     Route::get('/matakuliah', [MatakuliahController::class, 'index'])->name('matakuliah.index');
     Route::post('/matakuliah', [MatakuliahController::class, 'store'])->name('matakuliah.store');
+    Route::get('/matakuliah/{id}/edit', [MatakuliahController::class, 'edit'])->name('matakuliah.edit');
+    Route::put('/matakuliah/{id}', [MatakuliahController::class, 'update'])->name('matakuliah.update');
+    Route::delete('/matakuliah/{id}', [MatakuliahController::class, 'destroy'])->name('matakuliah.destroy');
     
     // Dosen
     Route::get('/dosen', [DosenController::class, 'index'])->name('dosen.index');
     Route::post('/dosen', [DosenController::class, 'store'])->name('dosen.store');
+    Route::get('/dosen/{id}/edit', [DosenController::class, 'edit'])->name('dosen.edit');
+    Route::put('/dosen/{id}', [DosenController::class, 'update'])->name('dosen.update');
+    Route::delete('/dosen/{id}', [DosenController::class, 'destroy'])->name('dosen.destroy');
 });
 
 require __DIR__.'/auth.php';

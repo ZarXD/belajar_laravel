@@ -25,9 +25,9 @@
                        class="block px-4 py-2 rounded hover:bg-gray-200 {{ request()->routeIs('mahasiswa.*') ? 'bg-gray-200 font-semibold' : '' }}">
                         Mahasiswa
                     </a>
-                    <a href="{{ route('kelas.index') }}"
+                    <a href="{{ route('ruangan.index') }}"
                        class="block px-4 py-2 rounded hover:bg-gray-200 {{ request()->routeIs('ruangan.*') ? 'bg-gray-200 font-semibold' : '' }}">
-                        Kelas
+                        Ruangan
                     </a>
                     <a href="{{ route('matakuliah.index') }}"
                         class="block px-4 py-2 hover:bg-gray-200 {{ request()->routeIs('matkul.*') ? 'bg-gray-200 font-semibold' : '' }}">
