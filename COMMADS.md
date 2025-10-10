@@ -3,3 +3,4 @@
 - composer require spatie/laravel-permission
 - php artisan make:seeder namaSeeder
 - php artisan db:seed --class=namaSeeder
+- hp artisan make:controller Auth/StudentRegisterContoller

@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\DosenController;
-use App\Http\Controllers\KelasController;
+use App\Http\Controllers\Auth\StudentRegisterContoller;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MatakuliahController;
@@ -20,6 +20,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Register mahasiswa
+    Route::get('/register-mahasiswa', [StudentRegisterContoller::class, 'showRegistrationForm'])->name('register.mahasiswa');
+    Route::post('/register-mahasiswa', [StudentRegisterContoller::class, 'register']);
     
     // Mahasiswa
     Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa.index');
