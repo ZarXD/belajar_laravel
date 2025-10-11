@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\Auth\StudentRegisterContoller;
+use App\Http\Controllers\EkycController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MatakuliahController;
@@ -21,10 +22,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Register mahasiswa
-    Route::get('/register-mahasiswa', [StudentRegisterContoller::class, 'showRegistrationForm'])->name('register.mahasiswa');
-    Route::post('/register-mahasiswa', [StudentRegisterContoller::class, 'register']);
-    
     // Mahasiswa
     Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa.index');
     Route::post('/mahasiswa', [MahasiswaController::class, 'store'])->name('mahasiswa.store');
@@ -54,4 +51,22 @@ Route::middleware('auth')->group(function () {
     Route::delete('/dosen/{id}', [DosenController::class, 'destroy'])->name('dosen.destroy');
 });
 
+Route::middleware(['auth'])->prefix('ekyc')->group(function() {
+    // EKYC step 1
+    Route::get('step1', [EkycController::class, 'step1'])->name('ekyc.step1');
+    Route::post('step1', [EkycController::class, 'storeStep1'])->name('ekyc.storeStep1');
+    
+    // EKYC step 2
+    Route::get('step2', [EkycController::class, 'step2'])->name('ekyc.step2');
+    Route::post('step2', [EkycController::class, 'storeStep2'])->name('ekyc.step2.store');
+    
+    // EKYC step 3
+    Route::get('step3', [EkycController::class, 'step3'])->name('ekyc.step3');
+    Route::post('step3', [EkycController::class, 'storeStep3'])->name('ekyc.step3.store');
+
+});
+    // Register mahasiswa
+    Route::get('/register-mahasiswa', [StudentRegisterContoller::class, 'showRegistrationForm'])->name('register.mahasiswa');
+    Route::post('/register-mahasiswa', [StudentRegisterContoller::class, 'register']);
+    
 require __DIR__.'/auth.php';
