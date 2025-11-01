@@ -33,8 +33,9 @@ class AuthenticatedSessionController extends Controller
         // Redirect berdasarkan role
         if ($user->role === 'admin') {
             return redirect()->route('dashboard');
+        } else {
+            return redirect()->route('ekyc.step1');
         }
-        return redirect()->route('ekyc.step1');
     }
 
     /**

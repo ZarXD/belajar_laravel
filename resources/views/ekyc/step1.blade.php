@@ -3,11 +3,19 @@
         <h2 class="text-xl font-semibold mb-4">E-KYC - Langkah 1: Data Pribadi</h2>
 
         @if (session('success'))
-            
+            <div class="bg-green-100 text-green-700 p-3 mb-4 rounded">
+                {{ session('success') }}
+            </div>
         @endif
 
         @if ($errors->any())
-            
+            <div class="bg-red-100 text-red-700 p-3 mb-4 rounded">
+                <ul class="list-disc ml-4 text-sm">
+                    @foreach ($errors->all as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
         @endif
 
         <form action="{{ route('ekyc.storeStep1') }}" method="post">
@@ -30,7 +38,7 @@
             </div>
             <div class="flex justify-end">
                 <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-                    Lanjut Step 2
+                    Simpan & Lanjut Step 2
                 </button>
             </div>
         </form>

@@ -70,11 +70,11 @@ class EkycController extends Controller
 
         $ekyc->update($validated);
 
-        return redirect()->route('ekyc.step3')->with('success', 'Step 2 tersimpan');
+        return redirect()->route('ekyc.step3')->with('success', 'Dokumen tersimpan');
         // return back()->with('success', 'Data tersimpan');
     }
 
-    // ===================== STEP 2
+    // ===================== STEP 3
     public function step3() {
         $data = EkycRegistration::where('user_id', Auth::id())->first();
         return view('ekyc.step3', compact('data'));
@@ -103,7 +103,39 @@ class EkycController extends Controller
         }
 
         $data->save();
-        return redirect()->route('ekyc.step3')->with('success', 'Data pendidikan berhasil disimpan');
+        return redirect()->route('ekyc.step4')->with('success', 'Data pendidikan berhasil disimpan');
 
+    }
+
+    // ===================== STEP 4
+    public function step4() {
+        $data = EkycRegistration::where('user_id', Auth::id())->first();
+        
+        $alamatList = MasterAlamat::all();
+    }
+
+    public function storeStep4(Request $request) {
+        $request->validate([
+            'alamat_domisili' => 'required|string|max:255',
+            'provinsi' => 'required|string|max:100',
+            'kota' => 'required|string|max:100',
+            'kecamatan' => 'required|string|max:100',
+            'kode_pos' => 'required|numeric|digits_between:4,6',
+            'nama_ibu_kandung' => 'required|string|max:100',
+            'sumber_informasi' => 'required|in:sosmed,kerabat,info_kampus',
+
+        ]);
+
+        $data = EkycRegistration::where('user_id', Auth::id())->first();
+        $data->alamat_domisili = $request->alamat_domisili;
+        $data->provinsi = $request->provinsi;
+        $data->kota = $request->kota;
+        $data->kecamatan = $request->kecamatan;
+        $data->kode_pos = $request->kode_pos;
+        $data->nama_ibu_kandung = $request->nama_ibu_kandung;
+        $data->sumber_informasi = $request->sumber_informasi;
+
+        $data->save();
+        return redirect()->route('ekyc.step4')->with('success', 'Data domisili & referensi berhasil disimpan');
     }
 }

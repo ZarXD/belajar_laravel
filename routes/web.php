@@ -63,6 +63,10 @@ Route::middleware(['auth'])->prefix('ekyc')->group(function() {
     // EKYC step 3
     Route::get('step3', [EkycController::class, 'step3'])->name('ekyc.step3');
     Route::post('step3', [EkycController::class, 'storeStep3'])->name('ekyc.step3.store');
+    
+    // EKYC step 4
+    Route::get('step4', [EkycController::class, 'step4'])->name('ekyc.step4');
+    Route::post('step4', [EkycController::class, 'storeStep4'])->name('ekyc.step4.store');
 
 });
     // Register mahasiswa

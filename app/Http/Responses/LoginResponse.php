@@ -9,10 +9,11 @@ class LoginResponse implements LoginResponseContract {
         $user = $request->user();
 
         if ($user->role === 'admin') {
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('dashboard');
+        } else {
+            return redirect()->route('ekyc.step1');
         }
 
-        return redirect()->route('ekyc.step1');
     }
 }
 
