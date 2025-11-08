@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EkycRegistration;
+use App\Models\MasterAlamat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -111,29 +112,48 @@ class EkycController extends Controller
     public function step4() {
         $data = EkycRegistration::where('user_id', Auth::id())->first();
         
-        $alamatList = MasterAlamat::all();
+        $alamatList = MasterAlamat::all(); 
+ 
+        // Ambil provinsi unik untuk dropdown pertama 
+        $provinsiList = MasterAlamat::select('provinsi')->distinct()->pluck('provinsi'); 
+    
+        $kotaList = []; 
+        $kecamatanList = []; 
+    
+        if ($data && $data->provinsi) { 
+            $kotaList = MasterAlamat::where('provinsi', $data->provinsi) 
+                ->select('kota')->distinct()->pluck('kota'); 
+        }
+    
+        if ($data && $data->kota) { 
+            $kecamatanList = MasterAlamat::where('kota', $data->kota) 
+                ->select('kecamatan')->distinct()->pluck('kecamatan'); 
+        }
+    
+        return view('ekyc.step4', compact('data', 'alamatList', 'provinsiList', 'kotaList', 'kecamatanList'));
+
     }
 
     public function storeStep4(Request $request) {
         $request->validate([
-            'alamat_domisili' => 'required|string|max:255',
-            'provinsi' => 'required|string|max:100',
-            'kota' => 'required|string|max:100',
-            'kecamatan' => 'required|string|max:100',
-            'kode_pos' => 'required|numeric|digits_between:4,6',
-            'nama_ibu_kandung' => 'required|string|max:100',
-            'sumber_informasi' => 'required|in:sosmed,kerabat,info_kampus',
+            'alamatDomisili' => 'nullable|string|max:255',
+            'provinsi' => 'nullable|string|max:100',
+            'kota' => 'nullable|string|max:100',
+            'kecamatan' => 'nullable|string|max:100',
+            'kode_pos' => 'nullable|string|max:100',
+            'nama_ibu_kandung' => 'nullable|string|max:100',
+            'referensi_sumber' => 'nullable|string|max:100',
 
         ]);
 
         $data = EkycRegistration::where('user_id', Auth::id())->first();
-        $data->alamat_domisili = $request->alamat_domisili;
+        $data->alamatDomisili = $request->alamatDomisili;
         $data->provinsi = $request->provinsi;
         $data->kota = $request->kota;
         $data->kecamatan = $request->kecamatan;
         $data->kode_pos = $request->kode_pos;
         $data->nama_ibu_kandung = $request->nama_ibu_kandung;
-        $data->sumber_informasi = $request->sumber_informasi;
+        $data->referensi_sumber = $request->referensi_sumber;
 
         $data->save();
         return redirect()->route('ekyc.step4')->with('success', 'Data domisili & referensi berhasil disimpan');
