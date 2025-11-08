@@ -23,6 +23,14 @@ class MasterAlamatSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'provinsi' => 'DKI Jakarta',
+                'kota' => 'Jakarta Pusat',
+                'kecamatan' => 'Gambir',
+                'kode_pos' => '10311',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
                 'provinsi' => 'Jawa Barat',
                 'kota' => 'Bandung',
                 'kecamatan' => 'Coblong',

@@ -11,13 +11,12 @@ class EkycController extends Controller
 {
     public function step1() {
         // ambil data draft user jika ada
-        $ekyc = EkycRegistration::where('user_id', Auth::id())->where('status', 'draft')->first();
+        $ekyc = EkycRegistration::where('user_id', Auth::id())->first();
 
         // simpan session agar bisa lanjut ke step berikutnya
         if ($ekyc) {
             session(['ekyc_id' => $ekyc->id]);
         }
-
         return view('ekyc.step1', compact('ekyc'));
     }
 
@@ -155,7 +154,23 @@ class EkycController extends Controller
         $data->nama_ibu_kandung = $request->nama_ibu_kandung;
         $data->referensi_sumber = $request->referensi_sumber;
 
+        $data->status = 'submitted';
         $data->save();
-        return redirect()->route('ekyc.step4')->with('success', 'Data domisili & referensi berhasil disimpan');
+        return redirect()->route('ekyc.step5')->with('success', 'Data domisili & referensi berhasil disimpan');
+    }
+
+    // ===================== STEP 5
+    public  function step5() {
+        $data = EkycRegistration::where('user_id', Auth::id())->first();
+        
+        if (!$data) {
+            return redirect()->route('ekyc.step1')->with('error', 'Data E-KYC tidak ditemukan');
+        }
+
+        if ($data->status !== 'submitted') {
+            return redirect()->route('ekyc.step4')->with('error', 'Lengkapi data terlebih dahulu sebelum menyelesaikan E-KYC');
+        }
+
+        return view('ekyc.step5', compact('data'));
     }
 }

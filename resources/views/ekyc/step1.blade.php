@@ -37,9 +37,17 @@
                 <textarea name="alamat" rows="3" class="w-full border-gray-300 rounded-md p-2">{{ old('alamat', $ekyc->alamat ?? '') }}</textarea>
             </div>
             <div class="flex justify-end">
-                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                {{-- <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
                     Simpan & Lanjut Step 2
+                </button> --}}
+
+                @if ($ekyc && $ekyc->status === 'submitted')
+                <a href="{{ route('ekyc.step2') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Next</a>
+                @else
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                Simpan & Lanjut Step 2
                 </button>
+                @endif
             </div>
         </form>
     </div>

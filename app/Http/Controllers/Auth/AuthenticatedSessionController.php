@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Models\EkycRegistration;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -33,6 +34,12 @@ class AuthenticatedSessionController extends Controller
         // Redirect berdasarkan role
         if ($user->role === 'admin') {
             return redirect()->route('dashboard');
+        }
+
+        $ekyc = EkycRegistration::where('user_id', Auth::id())->first();
+
+        if ($ekyc && $ekyc->status === 'submitted') {
+            return redirect()->route('ekyc.step5');
         } else {
             return redirect()->route('ekyc.step1');
         }

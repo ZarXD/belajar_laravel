@@ -87,9 +87,13 @@
 
             <div class="flex justify-between items-center mt-4">
                 <a href="{{ route('ekyc.step3') }}" class="text-sm text-gray-500 hover:text-gray-700">Kembali ke Step 3</a>
-                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-                    Simpan & Lanjut Step 4
+                @if ($data && $data->status === 'submitted')
+                <a href="{{ route('ekyc.step5') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Next</a>
+                @else
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                Simpan
                 </button>
+                @endif
             </div>
         </form>
     </div>
@@ -104,9 +108,10 @@
             const kotaSelect = document.getElementById('kota');
             kotaSelect.innerHTML = '<option value="">-- Pilih Kota --</option>';
 
-            const filteredKota = alamatData.filter(item => item.provinsi === prov);
-            filteredKota.forEach(item => {
-                kotaSelect.innerHTML += `<option value="${item.kota}">${item.kota}</option>`;
+            const filteredKota = alamatData.filter(item => item.provinsi === prov).map(item => item.kota);
+            const unik = [...new Set(filteredKota)];
+            unik.forEach(item => {
+                kotaSelect.innerHTML += `<option value="${item}">${item}</option>`;
             });
         })
         document.getElementById('kota').addEventListener('change', function () {
@@ -115,7 +120,8 @@
             kecSelect.innerHTML = '<option value="">-- Pilih Kecamatan --</option>';
 
             const filteredKec = alamatData.filter(item => item.kota === kota);
-            filteredKec.forEach(item => {
+            const unik = [...new Set(filteredKec)];
+            unik.forEach(item => {
                 kecSelect.innerHTML += `<option value="${item.kecamatan}">${item.kecamatan}</option>`;
             });
         })
