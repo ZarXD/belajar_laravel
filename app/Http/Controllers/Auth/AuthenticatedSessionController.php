@@ -38,11 +38,34 @@ class AuthenticatedSessionController extends Controller
 
         $ekyc = EkycRegistration::where('user_id', Auth::id())->first();
 
-        if ($ekyc && $ekyc->status === 'submitted') {
-            return redirect()->route('ekyc.step5');
-        } else {
+        if (!$ekyc) {
             return redirect()->route('ekyc.step1');
         }
+
+        switch ($ekyc->status) {
+            case 'draft':
+                return redirect()->route('ekyc.step1');
+                break;
+            case 'submitted':
+                return redirect()->route('ekyc.step5');
+                break;
+            case 'accepted':
+                return redirect()->route('ekyc.accepted');
+                break;
+            case 'rejected':
+                return redirect()->route('ekyc.rejected');
+                break;
+            
+            default:
+                return redirect()->route('ekyc.step1');
+                break;
+        }
+
+        // if ($ekyc && $ekyc->status === 'submitted') {
+        //     return redirect()->route('ekyc.step5');
+        // } else {
+        //     return redirect()->route('ekyc.step1');
+        // }
     }
 
     /**

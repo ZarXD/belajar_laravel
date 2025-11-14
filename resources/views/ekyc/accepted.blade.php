@@ -1,0 +1,51 @@
+<x-app-layout>
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow mt-8 text-center">
+        <h2 class="text-xl font-semibold mb-4 text-gray-700">EKYC Selesai</h2>
+
+        @if (session('success'))
+            <div class="bg-green-100 text-green-700 p-3 mb-4 rounded">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="bg-red-100 text-red-700 p-3 mb-4 rounded">
+                <ul class="list-disc ml-4 text-sm">
+                    @foreach ($errors->all as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+    <div class="flex flex-col items-center justify-center py-6">
+        <svg
+            class="w-16 h-16 text-green-500"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 122.88 122.88"
+            fill="currentColor"
+            aria-hidden="true"
+            >
+            <g>
+                <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M61.44,0c33.932,0,61.44,27.508,61.44,61.44c0,33.932-27.508,61.439-61.44,61.439 C27.507,122.88,0,95.372,0,61.44C0,27.508,27.507,0,61.44,0L61.44,0z M34.258,63.075c0.824-4.78,6.28-7.44,10.584-4.851 c0.39,0.233,0.763,0.51,1.11,0.827l0.034,0.032c1.932,1.852,4.096,3.778,6.242,5.688l1.841,1.652l21.84-22.91 c1.304-1.366,2.259-2.25,4.216-2.689c6.701-1.478,11.412,6.712,6.663,11.719L59.565,81.108c-2.564,2.735-7.147,2.985-9.901,0.373 c-1.581-1.466-3.297-2.958-5.034-4.467c-3.007-2.613-6.077-5.28-8.577-7.919C34.551,67.595,33.903,65.139,34.258,63.075 L34.258,63.075z"
+                />
+            </g>
+            </svg>
+        
+        <p class="text-gray-700 mb-3 mt-4">
+            <strong>Selamat!</strong> Proses registrasi <strong>E-KYC</strong> Anda telah selesai.
+        </p>
+        <p class="text-gray-700 mb-6">
+            Data Anda telah <strong>berhasil diverifikasi</strong> oleh tim kami.<br>
+            Anda sekarang dapat melanjutkan dan menikmati semua layanan kami.
+        </p>
+        
+        <a href="{{ route('dashboard') }}" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition">
+            Lanjut ke Dashboard
+        </a>
+    </div>
+</div>
+</x-app-layout>

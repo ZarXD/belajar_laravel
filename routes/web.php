@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\EkycAdminController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\Auth\StudentRegisterContoller;
 use App\Http\Controllers\EkycController;
@@ -71,6 +72,14 @@ Route::middleware(['auth'])->prefix('ekyc')->group(function() {
     // EKYC step 5
     Route::get('step5', [EkycController::class, 'step5'])->name('ekyc.step5');
 
+    Route::get('accepted', [EkycController::class, 'accepted'])->name('ekyc.accepted');
+    Route::get('rejected', [EkycController::class, 'rejected'])->name('ekyc.rejected');
+
+    Route::prefix('admin')->group(function () {
+        Route::get('/ekyc', [EkycAdminController::class, 'index'])->name('admin.ekyc.index');
+        Route::get('/ekyc/{id}', [EkycAdminController::class, 'show'])->name('admin.ekyc.show');
+        Route::post('/ekyc/{id}/verify', [EkycAdminController::class, 'verify'])->name('admin.ekyc.verify');
+    });
 
 });
     // Register mahasiswa
